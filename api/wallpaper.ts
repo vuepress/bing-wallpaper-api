@@ -63,8 +63,8 @@ const getBingWallpaper = async (
     const enImageContent = enMediaContents[index].ImageContent;
 
     return {
-      url: ImageContent.Image.Url,
-      wallpaper: ImageContent.Image.Wallpaper,
+      url: "https://bing.com" + ImageContent.Image.Url,
+      wallpaper: "https://bing.com" + ImageContent.Image.Wallpaper,
       downloadable: ImageContent.Image.Downloadable,
       locales: {
         zh: {
@@ -72,7 +72,7 @@ const getBingWallpaper = async (
           description: ImageContent.Description,
           headline: ImageContent.Headline,
           copyright: ImageContent.Copyright,
-          copyrightLink: ImageContent.BackstageUrl,
+          copyrightLink: "https://bing.com" + ImageContent.BackstageUrl,
           quickFact: ImageContent.QuickFact.MainText,
         },
         en: {
@@ -81,7 +81,9 @@ const getBingWallpaper = async (
           headline: enImageContent.Headline,
           copyright: enImageContent.Copyright,
           copyrightLink:
-            enImageContent.BackstageUrl + (lang === "en" ? "&ensearch=1" : ""),
+            "https://bing.com" +
+            enImageContent.BackstageUrl +
+            (lang === "en" ? "&ensearch=1" : ""),
           quickFact: enImageContent.QuickFact.MainText,
         },
       },
