@@ -37,7 +37,7 @@ interface BingWallpaperInfo {
       description: string;
       headline: string;
       copyright: string;
-      copyrightLink: string;
+      backstage: string;
       quickFact: string;
     }
   >;
@@ -71,7 +71,7 @@ const getBingWallpaper = async (): Promise<BingWallpaperInfo[]> => {
           description: ImageContent.Description,
           headline: ImageContent.Headline,
           copyright: ImageContent.Copyright,
-          copyrightLink: "https://bing.com" + ImageContent.BackstageUrl,
+          backstage: "https://bing.com" + ImageContent.BackstageUrl,
           quickFact: ImageContent.QuickFact.MainText,
         },
         en: {
@@ -79,7 +79,7 @@ const getBingWallpaper = async (): Promise<BingWallpaperInfo[]> => {
           description: enImageContent.Description,
           headline: enImageContent.Headline,
           copyright: enImageContent.Copyright,
-          copyrightLink:
+          backstage:
             "https://bing.com" + enImageContent.BackstageUrl + "&ensearch=1",
           quickFact: enImageContent.QuickFact.MainText,
         },
