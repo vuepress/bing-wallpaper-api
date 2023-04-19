@@ -27,36 +27,66 @@ interface BingResponse extends Record<string, any> {
 }
 
 interface BingWallpaperInfo {
-  title: string;
-  description: string;
-  headline: string;
   url: string;
   wallpaper: string;
   downloadable: boolean;
-  copyright: string;
-  quickFact: string;
+  locales: Record<
+    string,
+    {
+      title: string;
+      description: string;
+      headline: string;
+      copyright: string;
+      quickFact: string;
+    }
+  >;
 }
 
 const getBingWallpaper = async (
   lang: string | string[]
 ): Promise<BingWallpaperInfo[]> => {
-  const res = await fetch(
-    `https://cn.bing.com/hp/api/model?FORM=BEHPTB${
-      lang === "en" ? "&ensearch=1" : ""
-    }`
-  );
-  const { MediaContents }: BingResponse = await res.json();
+  const [
+    { MediaContents: zhMediaContents },
+    { MediaContents: enMediaContents },
+  ] = await Promise.all([
+    <Promise<BingResponse>>(
+      (await fetch(`https://cn.bing.com/hp/api/model?FORM=BEHPTB`)).json()
+    ),
+    <Promise<BingResponse>>(
+      (
+        await fetch(`https://cn.bing.com/hp/api/model?FORM=BEHPTB&ensearch=1`)
+      ).json()
+    ),
+  ]);
 
-  return MediaContents.map(({ ImageContent }) => ({
-    title: ImageContent.Title,
-    description: ImageContent.Description,
-    headline: ImageContent.Headline,
-    url: ImageContent.Image.Url,
-    wallpaper: ImageContent.Image.Wallpaper,
-    downloadable: ImageContent.Image.Downloadable,
-    copyright: ImageContent.Copyright + (lang === "en" ? "&ensearch=1" : ""),
-    quickFact: ImageContent.QuickFact.MainText,
-  }));
+  return zhMediaContents.map(({ ImageContent }, index) => {
+    const enImageContent = enMediaContents[index].ImageContent;
+
+    return {
+      url: ImageContent.Image.Url,
+      wallpaper: ImageContent.Image.Wallpaper,
+      downloadable: ImageContent.Image.Downloadable,
+      locales: {
+        zh: {
+          title: ImageContent.Title,
+          description: ImageContent.Description,
+          headline: ImageContent.Headline,
+          copyright: ImageContent.Copyright,
+          copyrightLink: ImageContent.BackstageUrl,
+          quickFact: ImageContent.QuickFact.MainText,
+        },
+        en: {
+          title: enImageContent.Title,
+          description: enImageContent.Description,
+          headline: enImageContent.Headline,
+          copyright: enImageContent.Copyright,
+          copyrightLink:
+            enImageContent.BackstageUrl + (lang === "en" ? "&ensearch=1" : ""),
+          quickFact: enImageContent.QuickFact.MainText,
+        },
+      },
+    };
+  });
 };
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
