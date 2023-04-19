@@ -64,7 +64,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
   res.setHeader("Cache-Control", "s-maxage=14400");
 
-  return res.json(getBingWallpaper(lang));
+  return res.json(await getBingWallpaper(lang));
 };
 
 export default handler;
