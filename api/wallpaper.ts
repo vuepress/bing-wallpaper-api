@@ -42,9 +42,7 @@ interface BingWallpaperInfo {
   >;
 }
 
-const getBingWallpaper = async (
-  lang: string | string[]
-): Promise<BingWallpaperInfo[]> => {
+const getBingWallpaper = async (): Promise<BingWallpaperInfo[]> => {
   const [
     { MediaContents: zhMediaContents },
     { MediaContents: enMediaContents },
@@ -81,9 +79,7 @@ const getBingWallpaper = async (
           headline: enImageContent.Headline,
           copyright: enImageContent.Copyright,
           copyrightLink:
-            "https://bing.com" +
-            enImageContent.BackstageUrl +
-            (lang === "en" ? "&ensearch=1" : ""),
+            "https://bing.com" + enImageContent.BackstageUrl + "&ensearch=1",
           quickFact: enImageContent.QuickFact.MainText,
         },
       },
@@ -92,11 +88,9 @@ const getBingWallpaper = async (
 };
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
-  const { lang = "zh" } = req.query;
-
   res.setHeader("Cache-Control", "s-maxage=14400");
 
-  return res.json(await getBingWallpaper(lang));
+  return res.json(await getBingWallpaper());
 };
 
 export default handler;
