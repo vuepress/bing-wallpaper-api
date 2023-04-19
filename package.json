@@ -1,10 +1,16 @@
 {
-  "repository": "https://github.com/vercel/examples.git",
+  "name": "bing-wallpaper",
+  "author": {
+    "name": "Mister-Hope",
+    "email": "mister-hope@outlook.com",
+    "url": "https://mrhope.site"
+  },
+  "repository": "git@github.com:Mister-Hope/bing-wallpaper.git",
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@types/node": "^17.0.42",
-    "@vercel/node": "^2.9.6",
-    "typescript": "^4.7.3"
+    "@types/node": "^18.15.11",
+    "@vercel/node": "^2.10.2",
+    "typescript": "^5.0.4"
   }
 }
