@@ -89,9 +89,10 @@ const getBingWallpaper = async (): Promise<BingWallpaperInfo[]> => {
 };
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Cache-Control", "s-maxage=14400");
 
-  return res.json(await getBingWallpaper());
+  return res.status(200).json(await getBingWallpaper());
 };
 
 export default handler;
