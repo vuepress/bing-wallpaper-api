@@ -37,6 +37,7 @@ interface BingWallpaperInfo {
       description: string;
       headline: string;
       copyright: string;
+      copyrightLink: string;
       quickFact: string;
     }
   >;
