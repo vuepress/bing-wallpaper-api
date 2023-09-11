@@ -8,7 +8,7 @@
   "repository": "git@github.com:Mister-Hope/bing-wallpaper.git",
   "license": "MIT",
   "private": true,
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.7.5",
   "devDependencies": {
     "@types/node": "^20.3.2",
     "@vercel/node": "^2.15.3",
