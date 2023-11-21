@@ -15,6 +15,6 @@
   "devDependencies": {
     "@types/node": "20.9.0",
     "@vercel/node": "3.0.9",
-    "typescript": "5.2.2"
+    "typescript": "5.3.2"
   }
 }
